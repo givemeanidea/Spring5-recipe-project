@@ -2,6 +2,10 @@ package guru.springframework.services;
 
 import guru.springframework.domain.Recipe;
 
-public interface RecipeService extends CrudService<Recipe, Long> {
+import java.util.Set;
 
+
+public interface RecipeService {
+
+    Set<Recipe> getRecipes();
 }
