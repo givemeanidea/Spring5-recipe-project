@@ -38,4 +38,9 @@ public class Ingredient {
         this.uom = uom;
         this.recipe = recipe;
     }
+
+    @Override
+    public String toString() {
+        return amount + " " + uom.getDescription() + " " + description;
+    }
 }
