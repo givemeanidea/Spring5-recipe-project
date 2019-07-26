@@ -13,6 +13,9 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Created by jt on 6/13/17.
+ */
 @Slf4j
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -26,10 +29,10 @@ public class RecipeServiceImpl implements RecipeService {
         this.recipeCommandToRecipe = recipeCommandToRecipe;
         this.recipeToRecipeCommand = recipeToRecipeCommand;
     }
+
     @Override
     public Set<Recipe> getRecipes() {
-
-        log.debug("I'm in this service");
+        log.debug("I'm in the service");
 
         Set<Recipe> recipeSet = new HashSet<>();
         recipeRepository.findAll().iterator().forEachRemaining(recipeSet::add);
@@ -37,13 +40,15 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Recipe findById(Long id) {
+    public Recipe findById(Long l) {
 
-        Optional<Recipe> recipe = recipeRepository.findById(id);
-        if (!recipe.isPresent()) {
-            throw new RuntimeException("Recipe not found");
+        Optional<Recipe> recipeOptional = recipeRepository.findById(l);
+
+        if (!recipeOptional.isPresent()) {
+            throw new RuntimeException("Recipe Not Found!");
         }
-        return recipe.get();
+
+        return recipeOptional.get();
     }
 
     @Override
@@ -55,8 +60,6 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     @Transactional
     public RecipeCommand saveRecipeCommand(RecipeCommand command) {
-
-        // Conver command POJO to Recipe, still needs to be saved
         Recipe detachedRecipe = recipeCommandToRecipe.convert(command);
 
         Recipe savedRecipe = recipeRepository.save(detachedRecipe);
